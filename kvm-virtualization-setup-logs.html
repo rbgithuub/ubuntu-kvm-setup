@@ -1105,3 +1105,315 @@ virbr0: flags=4099&lt;UP,BROADCAST,MULTICAST&gt;  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
 <font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>/etc/netplan</b></font>$</pre>
+<pre><font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo networkctl status -a
+WARNING: systemd-networkd is not running, output will be incomplete.
+
+● 1: lo
+       Link File: /lib/systemd/network/99-default.link
+    Network File: n/a
+            Type: loopback
+           State: n/a (unmanaged)
+         Address: 127.0.0.1
+                  ::1
+
+● 2: enp1s0
+       Link File: /lib/systemd/network/99-default.link
+    Network File: n/a
+            Type: ether
+           State: n/a (unmanaged)
+            Path: pci-0000:01:00.0
+          Driver: atl1c
+          Vendor: Qualcomm Atheros
+           Model: AR8152 v2.0 Fast Ethernet
+      HW Address: 00:26:6c:d8:10:fa (INVENTEC Corporation)
+         Address: 192.168.1.7
+                  fe80::e303:d86a:e9bf:1f59
+         Gateway: 192.168.1.1 (Dragon Path Technologies Co., Limited)
+                  fe80::bac1:a2ff:fe40:16a4 (Dragon Path Technologies Co., Limited)
+
+● 3: wlp2s0
+       Link File: /lib/systemd/network/99-default.link
+    Network File: n/a
+            Type: wlan
+           State: n/a (unmanaged)
+            Path: pci-0000:02:00.0
+          Driver: ath9k
+          Vendor: Qualcomm Atheros
+           Model: AR9285 Wireless Network Adapter (PCI-Express)
+      HW Address: d0:df:9a:f3:27:1e (Liteon Technology Corporation)
+
+● 4: virbr0
+       Link File: /lib/systemd/network/99-default.link
+    Network File: n/a
+            Type: ether
+           State: n/a (unmanaged)
+          Driver: bridge
+      HW Address: 52:54:00:33:12:cf
+         Address: 192.168.122.1
+
+● 5: virbr0-nic
+       Link File: /lib/systemd/network/99-default.link
+    Network File: n/a
+            Type: ether
+           State: n/a (unmanaged)
+          Driver: tun
+      HW Address: 52:54:00:33:12:cf
+
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo service networkctl status
+Unit networkctl.service could not be found.
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo service network status
+Unit network.service could not be found.
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo service NetworkManager status
+<font color="#8AE234"><b>●</b></font> NetworkManager.service - Network Manager
+   Loaded: loaded (/lib/systemd/system/NetworkManager.service; enabled; vendor preset: enabled)
+   Active: <font color="#8AE234"><b>active (running)</b></font> since Fri 2019-04-12 13:31:23 IST; 11h ago
+     Docs: man:NetworkManager(8)
+ Main PID: 826 (NetworkManager)
+    Tasks: 4 (limit: 4599)
+   CGroup: /system.slice/NetworkManager.service
+           ├─826 /usr/sbin/NetworkManager --no-daemon
+           └─922 /sbin/dhclient -d -q -sf /usr/lib/NetworkManager/nm-dhcp-helper -pf /run/dhclient-enp1s0.pid -lf /var/lib/NetworkManager/dhcl
+
+Apr 12 23:52:48 rbsys NetworkManager[826]: &lt;info&gt;  [1555093368.9541] keyfile: add connection in-memory (4afc39f8-cdc3-4238-81bd-36488ec6bc14,&quot;
+Apr 12 23:52:48 rbsys NetworkManager[826]: &lt;info&gt;  [1555093368.9576] device (virbr0-nic): Activation: starting connection &apos;virbr0-nic&apos; (4afc39
+Apr 12 23:52:48 rbsys NetworkManager[826]: &lt;info&gt;  [1555093368.9587] device (virbr0): state change: config -&gt; ip-config (reason &apos;none&apos;, sys-if
+Apr 12 23:52:48 rbsys NetworkManager[826]: &lt;info&gt;  [1555093368.9594] device (virbr0): state change: ip-config -&gt; ip-check (reason &apos;none&apos;, sys-
+Apr 12 23:52:48 rbsys NetworkManager[826]: &lt;info&gt;  [1555093368.9686] device (virbr0-nic): state change: disconnected -&gt; prepare (reason &apos;none&apos;
+Apr 12 23:52:48 rbsys NetworkManager[826]: &lt;info&gt;  [1555093368.9692] device (virbr0-nic): state change: prepare -&gt; unmanaged (reason &apos;connecti
+Apr 12 23:52:48 rbsys NetworkManager[826]: &lt;info&gt;  [1555093368.9694] device (virbr0-nic): released from master device virbr0
+Apr 12 23:52:48 rbsys NetworkManager[826]: &lt;info&gt;  [1555093368.9701] device (virbr0): state change: ip-check -&gt; secondaries (reason &apos;none&apos;, sy
+Apr 12 23:52:49 rbsys NetworkManager[826]: &lt;info&gt;  [1555093369.1018] device (virbr0): state change: secondaries -&gt; activated (reason &apos;none&apos;, s
+Apr 12 23:52:49 rbsys NetworkManager[826]: &lt;info&gt;  [1555093369.1458] device (virbr0): Activation: successful, device activated.
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ ifconfig
+enp1s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 192.168.1.7  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet6 fe80::e303:d86a:e9bf:1f59  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 00:26:6c:d8:10:fa  txqueuelen 1000  (Ethernet)
+        RX packets 241681  bytes 340155886 (340.1 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 156842  bytes 13912232 (13.9 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 1  collisions 0
+
+lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 2910  bytes 281300 (281.3 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 2910  bytes 281300 (281.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+virbr0: flags=4099&lt;UP,BROADCAST,MULTICAST&gt;  mtu 1500
+        inet 192.168.122.1  netmask 255.255.255.0  broadcast 192.168.122.255
+        ether 52:54:00:33:12:cf  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo atom /etc/netplan/50-cloud-init.yaml
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo netplan --debug apply
+** (generate:18720): <font color="#8AE234"><b>DEBUG</b></font>: <font color="#3465A4">00:36:22.794</font>: Processing input file /etc/netplan/01-network-manager-all.yaml..
+** (generate:18720): <font color="#8AE234"><b>DEBUG</b></font>: <font color="#3465A4">00:36:22.794</font>: starting new processing pass
+** (generate:18720): <font color="#8AE234"><b>DEBUG</b></font>: <font color="#3465A4">00:36:22.794</font>: Processing input file /etc/netplan/50-cloud-init.yaml..
+** (generate:18720): <font color="#8AE234"><b>DEBUG</b></font>: <font color="#3465A4">00:36:22.794</font>: starting new processing pass
+** (generate:18720): <font color="#8AE234"><b>DEBUG</b></font>: <font color="#3465A4">00:36:22.795</font>: br0: setting default backend to 2
+** (generate:18720): <font color="#8AE234"><b>DEBUG</b></font>: <font color="#3465A4">00:36:22.795</font>: ens33: setting default backend to 2
+** (generate:18720): <font color="#8AE234"><b>DEBUG</b></font>: <font color="#3465A4">00:36:22.795</font>: Generating output files..
+** (generate:18720): <font color="#8AE234"><b>DEBUG</b></font>: <font color="#3465A4">00:36:22.795</font>: networkd: definition br0 is not for us (backend 2)
+** (generate:18720): <font color="#8AE234"><b>DEBUG</b></font>: <font color="#3465A4">00:36:22.795</font>: networkd: definition ens33 is not for us (backend 2)
+DEBUG:no netplan generated networkd configuration exists
+DEBUG:netplan generated NM configuration exists, restarting NM
+DEBUG:ens33 not found in {}
+DEBUG:br0 not found in {}
+DEBUG:Merged config:
+network:
+  bonds: {}
+  bridges:
+    br0:
+      addresses:
+      - 192.168.0.51/24
+      dhcp4: false
+      gateway4: 192.168.0.1
+      interfaces:
+      - ens33
+      nameservers:
+        addresses:
+        - 192.168.0.1
+  ethernets:
+    ens33:
+      dhcp4: false
+      dhcp6: false
+  vlans: {}
+  wifis: {}
+
+DEBUG:Skipping non-physical interface: lo
+DEBUG:Skipping non-physical interface: enp1s0
+DEBUG:Skipping non-physical interface: wlp2s0
+DEBUG:Skipping non-physical interface: virbr0
+DEBUG:Skipping non-physical interface: virbr0-nic
+DEBUG:{}
+DEBUG:netplan triggering .link rules for lo
+DEBUG:netplan triggering .link rules for enp1s0
+DEBUG:netplan triggering .link rules for wlp2s0
+DEBUG:netplan triggering .link rules for virbr0
+DEBUG:netplan triggering .link rules for virbr0-nic
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo service networkctl status
+Unit networkctl.service could not be found.
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo service network status^C
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo apt install networkctl
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package networkctl
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ ifconfig
+br0: flags=4099&lt;UP,BROADCAST,MULTICAST&gt;  mtu 1500
+        inet 192.168.0.51  netmask 255.255.255.0  broadcast 192.168.0.255
+        ether be:bf:32:11:54:83  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+enp1s0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500
+        inet 192.168.1.7  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet6 fe80::e303:d86a:e9bf:1f59  prefixlen 64  scopeid 0x20&lt;link&gt;
+        ether 00:26:6c:d8:10:fa  txqueuelen 1000  (Ethernet)
+        RX packets 242036  bytes 340221899 (340.2 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 157144  bytes 13950453 (13.9 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 1  collisions 0
+
+lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10&lt;host&gt;
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 3361  bytes 318064 (318.0 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 3361  bytes 318064 (318.0 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+virbr0: flags=4099&lt;UP,BROADCAST,MULTICAST&gt;  mtu 1500
+        ether 52:54:00:33:12:cf  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ ls -lart
+total 80
+drwxr-xr-x 3 rbsys rbsys  4096 Apr 13 00:25 <font color="#729FCF"><b>..</b></font>
+-rw-r--r-- 1 rbsys rbsys    85 Apr 13 00:25 README.md
+drwxr-xr-x 3 rbsys rbsys  4096 Apr 13 00:25 <font color="#729FCF"><b>.</b></font>
+-rw-r--r-- 1 rbsys rbsys 62406 Apr 13 00:25 kvm-virtualization-setup-logs.html
+drwxr-xr-x 8 rbsys rbsys  4096 Apr 13 00:27 <font color="#729FCF"><b>.git</b></font>
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo cp /etc/netplan/50-cloud-init.yaml .
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ ls -lart
+total 84
+drwxr-xr-x 3 rbsys rbsys  4096 Apr 13 00:25 <font color="#729FCF"><b>..</b></font>
+-rw-r--r-- 1 rbsys rbsys    85 Apr 13 00:25 README.md
+-rw-r--r-- 1 rbsys rbsys 62406 Apr 13 00:25 kvm-virtualization-setup-logs.html
+drwxr-xr-x 8 rbsys rbsys  4096 Apr 13 00:27 <font color="#729FCF"><b>.git</b></font>
+-rw-r--r-- 1 root  root    256 Apr 13 00:41 50-cloud-init.yaml
+drwxr-xr-x 3 rbsys rbsys  4096 Apr 13 00:41 <font color="#729FCF"><b>.</b></font>
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo systemd-networkd status
+sudo: systemd-networkd: command not found
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo networkd status
+sudo: networkd: command not found
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo service networkd status
+Unit networkd.service could not be found.
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo systemctl status systemd-networkd
+● systemd-networkd.service - Network Service
+   Loaded: loaded (/lib/systemd/system/systemd-networkd.service; disabled; vendor preset: enabled)
+   Active: inactive (dead)
+     Docs: man:systemd-networkd.service(8)
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo systemctl start  systemd-networkd
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo systemctl status systemd-networkd
+<font color="#8AE234"><b>●</b></font> systemd-networkd.service - Network Service
+   Loaded: loaded (/lib/systemd/system/systemd-networkd.service; disabled; vendor preset: enabled)
+   Active: <font color="#8AE234"><b>active (running)</b></font> since Sat 2019-04-13 00:42:45 IST; 1s ago
+     Docs: man:systemd-networkd.service(8)
+ Main PID: 19033 (systemd-network)
+   Status: &quot;Processing requests...&quot;
+    Tasks: 1 (limit: 4599)
+   CGroup: /system.slice/systemd-networkd.service
+           └─19033 /lib/systemd/systemd-networkd
+
+Apr 13 00:42:45 rbsys systemd[1]: Starting Network Service...
+Apr 13 00:42:45 rbsys systemd-networkd[19033]: enp1s0: Gained IPv6LL
+Apr 13 00:42:45 rbsys systemd-networkd[19033]: Enumeration completed
+Apr 13 00:42:45 rbsys systemd[1]: Started Network Service.
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo networkctl status -a
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo networkctl status -a
+● 1: lo
+       Link File: /lib/systemd/network/99-default.link
+    Network File: n/a
+            Type: loopback
+           State: carrier (unmanaged)
+         Address: 127.0.0.1
+                  ::1
+
+<font color="#8AE234"><b>●</b></font> 2: enp1s0
+       Link File: /lib/systemd/network/99-default.link
+    Network File: n/a
+            Type: ether
+           State: <font color="#8AE234"><b>routable</b></font> (unmanaged)
+            Path: pci-0000:01:00.0
+          Driver: atl1c
+          Vendor: Qualcomm Atheros
+           Model: AR8152 v2.0 Fast Ethernet
+      HW Address: 00:26:6c:d8:10:fa (INVENTEC Corporation)
+         Address: 192.168.1.7
+                  fe80::e303:d86a:e9bf:1f59
+         Gateway: 192.168.1.1 (Dragon Path Technologies Co., Limited)
+                  fe80::bac1:a2ff:fe40:16a4 (Dragon Path Technologies Co., Limited)
+
+● 3: wlp2s0
+      HW Address: 00:26:6c:d8:10:fa (INVENTEC Corporation)
+         Address: 192.168.1.7
+                  fe80::e303:d86a:e9bf:1f59
+         Gateway: 192.168.1.1 (Dragon Path Technologies Co., Limited)
+                  fe80::bac1:a2ff:fe40:16a4 (Dragon Path Technologies Co., Limited)
+
+● 3: wlp2s0
+       Link File: /lib/systemd/network/99-default.link
+    Network File: n/a
+            Type: wlan
+           State: off (unmanaged)
+            Path: pci-0000:02:00.0
+          Driver: ath9k
+          Vendor: Qualcomm Atheros
+           Model: AR9285 Wireless Network Adapter (PCI-Express)
+      HW Address: d0:df:9a:f3:27:1e (Liteon Technology Corporation)
+
+● 4: virbr0
+       Link File: /lib/systemd/network/99-default.link
+    Network File: n/a
+            Type: ether
+           State: no-carrier (unmanaged)
+          Driver: bridge
+      HW Address: 52:54:00:33:12:cf
+
+● 5: virbr0-nic
+       Link File: /lib/systemd/network/99-default.link
+    Network File: n/a
+            Type: ether
+           State: off (unmanaged)
+          Driver: tun
+      HW Address: 52:54:00:33:12:cf
+
+● 6: br0
+       Link File: /lib/systemd/network/99-default.link
+    Network File: n/a
+            Type: ether
+           State: no-carrier (unmanaged)
+          Driver: bridge
+      HW Address: be:bf:32:11:54:83
+         Address: 192.168.0.51
+         Gateway: 192.168.0.1
+<font color="#8AE234"><b>rbsys@rbsys</b></font>:<font color="#729FCF"><b>~/git_projects/ubuntu-kvm-setup</b></font>$ sudo systemctl enable systemd-networkd
+Created symlink /etc/systemd/system/dbus-org.freedesktop.network1.service → /lib/systemd/system/systemd-networkd.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/systemd-networkd.service → /lib/systemd/system/systemd-networkd.service.
+Created symlink /etc/systemd/system/sockets.target.wants/systemd-networkd.socket → /lib/systemd/system/systemd-networkd.socket.
+Created symlink /etc/systemd/system/network-online.target.wants/systemd-networkd-wait-online.service → /lib/systemd/system/systemd-networkd-wait-online.service.</pre>
